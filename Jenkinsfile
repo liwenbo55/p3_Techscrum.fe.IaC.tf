@@ -74,10 +74,7 @@ pipeline {
                 subject: "Front-end terraform pipeline for ${params.Environment} environment successed.",
                 body: 
                     """
-                    Pipeline successed.
-                    Environment: ${params.Environment}. 
-                    Operation: ${params.Operation}. 
-                    Please check the plan file.
+                    Pipeline successed. \nEnvironment: ${params.Environment}. \nOperation: ${params.Operation}. \nPlease check the plan file.
                     """,
                 attachLog: false,
                 attachmentsPattern: "**/${params.Environment}_${params.Operation}_plan.txt"
