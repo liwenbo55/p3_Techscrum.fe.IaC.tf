@@ -9,7 +9,7 @@ pipeline {
     stages {
       stage('Check out code'){
         steps{
-          git branch:'main', url:'https://github.com/liwenbo55/p3_Techscrum.tf.fe.git'                
+          git branch:'master', url:'https://github.com/liwenbo55/p3_Techscrum.tf.fe.git'                
         }
       }
 
