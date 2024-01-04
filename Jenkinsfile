@@ -5,11 +5,11 @@ pipeline {
         // Choose an environment to deploy frond-end resources: 'dev', 'uat', or 'prod'.
         choice(choices: ['dev', 'uat', 'prod'], name: 'Environment', description: 'Please choose an environment.')
 
-        // Plan is used for gengrating plan file. Apply is used to deploy or destroy resources.
-        choice(choices: ['plan','apply'], name: 'plan_apply', description: 'Plan is used for gengrating plan file. Apply is used to deploy or destroy resources.')
-        
         // Apply or destroy resources
         choice(choices: ['deploy', 'destroy'], name: 'Operation', description: 'Plan or apply or destroy resources.')
+
+        // Plan is used for gengrating plan file. Apply is used to deploy or destroy resources.
+        choice(choices: ['plan','apply'], name: 'plan_apply', description: 'Plan is used for gengrating plan file. Apply is used to deploy or destroy resources.')
     }
     
     stages {
