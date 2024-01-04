@@ -71,7 +71,7 @@ pipeline {
         success {
             emailext(
                 to: "lawrence.wenboli@gmail.com",
-                subject: "Front-end terraform pipeline successed.",
+                subject: "Front-end terraform pipeline for ${params.Environment} ${params.plan_apply} successed.",
                 body: "Front-end resources for ${params.Environment} environment have been successfully ${params.Operation}ed. Please check the plan file.",
                 attachLog: false,
                 attachmentsPattern: "**/${params.Environment}_${params.Operation}_plan.txt"
@@ -82,7 +82,7 @@ pipeline {
         failure {
             emailext(
                 to: "lawrence.wenboli@gmail.com",
-                subject: "Front-end terraform pipeline failed.",
+                subject: "Front-end terraform pipeline for ${params.Environment} ${params.plan_apply} failed.",
                 body: "Front-end resources for ${params.Environment} environment have failed to be ${params.Operation}ed. Please check logfile for more details.",
                 attachLog: true
             )
