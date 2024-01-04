@@ -14,4 +14,4 @@ environment = "frontend-dev"
 domain_name = "dev.wenboli.xyz"
 
 # Alias for cloudfront distribution(including 'abc.com' and 'www.abc.com').
-cloudfront_distribution_alias = ["dev.wenboli.com"]
+cloudfront_distribution_alias = ["dev.wenboli.xyz"]
