@@ -25,8 +25,8 @@ pipeline {
                     echo "Deploying front-end resources for ${params.Environment} environment."
                     sh 'terraform --version'
                     sh "terraform init -reconfigure -backend-config=backend_${params.Environment}.conf -input=false"
-                    sh "terraform plan -var-file="${params.Environment}.tfvars" -out=${params.Environment}_plan -input=false"
-                    sh "terraform apply "${params.Environment}_plan""
+                    sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_plan -input=false"
+                    sh "terraform apply '${params.Environment}_plan'"
                     } else {
                         error "Invalid environment: ${params.Environment}."
                     }
