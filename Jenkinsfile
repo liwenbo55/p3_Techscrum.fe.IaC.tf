@@ -70,6 +70,7 @@ pipeline {
     }
     post {
         success {
+            echo "Front-end: ${params.Environment}--${params.Operation}--${params.plan_apply} has succeeded."
             emailext(
                 to: "lawrence.wenboli@gmail.com",
                 subject: "Front-end terraform pipeline for ${params.Environment} environment succeeded.",
@@ -83,6 +84,7 @@ pipeline {
         }
 
         failure {
+            echo "Front-end: ${params.Environment}--${params.Operation}--${params.plan_apply} has failed."
             emailext(
                 to: "lawrence.wenboli@gmail.com",
                 subject: "Front-end terraform pipeline for ${params.Environment} environment failed.",
