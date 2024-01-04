@@ -26,7 +26,9 @@ pipeline {
                     sh 'terraform --version'
                     sh "terraform init -reconfigure -backend-config=backend_${params.Environment}.conf -input=false"
                     sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_plan -input=false"
-                    sh "terraform apply '${params.Environment}_plan'"
+                    // sh "terraform apply '${params.Environment}_plan'"
+                    sh "terraform destroy -var-file=${params.Environment}.tfvars"
+                      
                     } else {
                         error "Invalid environment: ${params.Environment}."
                     }
