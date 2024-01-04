@@ -35,6 +35,8 @@ pipeline {
                           sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan"
                         } else if (params.Operation == 'destroy') {
                           sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan -destroy"
+                        } else {
+                            error "Please select apply or destroy."
                         }
                       
                       // Apply plan file
@@ -67,7 +69,7 @@ pipeline {
                 to: "lawrence.wenboli@gmail.com",
                 subject: "Front-end terraform pipeline successed.",
                 body: "Front-end resources for ${params.Environment} environment have been successfully ${params.Operation}ed. Please check the plan file.",
-                attachLog: false
+                attachLog: false,
                 attachmentsPattern: 'app/techscrum_fe/${params.Environment}_${params.Operation}_plan'
             )
         }
