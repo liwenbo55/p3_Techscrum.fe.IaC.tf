@@ -1,4 +1,4 @@
-// Techscrum IaC Jenkinsfile by Lawrence
+// Jenkinsfile for Techscrum project (by Lawrence)
 pipeline {
     agent any
     
