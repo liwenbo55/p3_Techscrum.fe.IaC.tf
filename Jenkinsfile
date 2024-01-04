@@ -5,7 +5,7 @@ pipeline {
         // Choose an environment to deploy frond-end resources: 'dev', 'uat', or 'prod'.
         choice(choices: ['dev', 'uat', 'prod'], name: 'Environment', description: 'Please choose an environment.')
         // Apply or destroy resources
-        choice(choices: ['apply', 'destroy'], name: 'Operation', description: 'Apply or destroy resources.')
+        choice(choices: ['plan','apply', 'destroy'], name: 'Operation', description: 'Plan or apply or destroy resources.')
     }
     
     stages {
@@ -23,6 +23,7 @@ pipeline {
                credentialsId: 'lawrence-jenkins-credential']
             ]){
               dir('app/techscrum_fe'){
+                  
                   if (params.Environment in ['dev', 'uat', 'prod']) {
                       echo "Deploying front-end resources for ${params.Environment} environment."
                       
@@ -31,30 +32,25 @@ pipeline {
 
                       // Terraform init
                       sh "terraform init -reconfigure -backend-config=backend_${params.Environment}.conf"
+
+                      // Terraform actions
                       if (params.Operation == 'apply') {
+                          // Terraform APPLY
                           sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan"
+                          sh "terraform apply '${params.Environment}_${params.Operation}_plan'"
                         } else if (params.Operation == 'destroy') {
+                          // Terraform DESTROY 
                           sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan -destroy"
+                          sh "terraform apply '${params.Environment}_${params.Operation}_plan'"
+                        } else if (params.Operation == 'plan') {
+                          sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan"
                         } 
                       
-                      // Apply plan file
-                      sh "terraform apply '${params.Environment}_${params.Operation}_plan'"
-
-                    //   // Plan and generate an apply/destroy file.
-                    //   sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan"
-
-                    // // plan deployment & apply plan
-                    // sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan"
-                    // sh "terraform apply '${params.Environment}_plan'"
-
-                    // // // plan for destroy & apply destory
-                    // // sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan -destroy"
-                    // // sh "terraform apply '${params.Environment}_destroy'"
-                      
+                      sh 'ls -la'
+                          
                     } else {
                         error "Invalid environment: ${params.Environment}."
                     }
-
               }
             }
           }
@@ -68,7 +64,7 @@ pipeline {
                 subject: "Front-end terraform pipeline successed.",
                 body: "Front-end resources for ${params.Environment} environment have been successfully ${params.Operation}ed. Please check the plan file.",
                 attachLog: false,
-                attachmentsPattern: '**/${params.Environment}_${params.Operation}_plan'
+                attachmentsPattern: '**/*_plan'
             )
         }
 
