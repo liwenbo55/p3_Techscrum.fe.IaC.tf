@@ -42,6 +42,8 @@ pipeline {
                           sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan"
                       } else if (params.Operation == 'destroy') {
                           sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan -destroy"
+                      } else {
+                          error "Invalid Operation: ${params.Operation}."
                       }
                                           
                       // Terraform actions
@@ -53,39 +55,12 @@ pipeline {
                       sh 'ls -la'
                       
                       // 
-                      sh "terraform show -no-color '${params.Environment}_${params.Operation}_plan' > '${params.Environment}_${params.Operation}_plan.txt' "                      
+                      sh "terraform show -no-color ${params.Environment}_${params.Operation}_plan > ${params.Environment}_${params.Operation}_plan.txt "                      
                           
                     } else {
                         error "Invalid environment: ${params.Environment}."
                     }                 
-                  
-                  // if (params.Environment in ['dev', 'uat', 'prod']) {
-                  //     echo "Deploying front-end resources for ${params.Environment} environment."
-                      
-                  //     // Echo terraform vision
-                  //     sh 'terraform --version'
 
-                  //     // Terraform init
-                  //     sh "terraform init -reconfigure -backend-config=backend_${params.Environment}.conf"
-
-                  //     // Terraform actions
-                  //     if (params.Operation == 'apply') {
-                  //         // Terraform APPLY
-                  //         sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan"
-                  //         sh "terraform apply '${params.Environment}_${params.Operation}_plan'"
-                  //       } else if (params.Operation == 'destroy') {
-                  //         // Terraform DESTROY 
-                  //         sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan -destroy"
-                  //         sh "terraform apply '${params.Environment}_${params.Operation}_plan'"
-                  //       } else if (params.Operation == 'plan') {
-                  //         sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan"
-                  //       } 
-                      
-                  //     sh 'ls -la'
-                          
-                  //   } else {
-                  //       error "Invalid environment: ${params.Environment}."
-                  //   }
               }
             }
           }
