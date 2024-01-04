@@ -99,7 +99,8 @@ pipeline {
                 subject: "Front-end terraform pipeline successed.",
                 body: "Front-end resources for ${params.Environment} environment have been successfully ${params.Operation}ed. Please check the plan file.",
                 attachLog: false,
-                attachmentsPattern: "**/'${params.Environment}_${params.Operation}_plan.txt'"
+                // attachmentsPattern: "**/'${params.Environment}_${params.Operation}_plan.txt'"
+                attachmentsPattern: "**/dev_destroy_plan.txt"
             )
         }
 
