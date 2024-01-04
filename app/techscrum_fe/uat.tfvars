@@ -1,11 +1,11 @@
 # AWS Region
-aws_region       = "ap-southeast-2"
+aws_region = "ap-southeast-2"
 
 # Hosted zone name
 hosted_zone_name = "wenboli.xyz"
 
 # Project Name
-project_name     = "p3.techscrum"
+project_name = "p3.techscrum"
 
 # Environment name
 environment = "frontend-uat"
