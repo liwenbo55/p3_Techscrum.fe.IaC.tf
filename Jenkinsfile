@@ -3,9 +3,9 @@ pipeline {
     
     parameters {
         // Choose an environment to deploy frond-end resources: 'dev', 'uat', or 'prod'.
-        choice(choices: ['dev', 'uat', 'prod'], name: 'Environment')
+        choice(choices: ['dev', 'uat', 'prod'], name: 'Environment', description: 'Please choose an environment.')
         // Apply or destroy resources
-        choice(choices: ['apply', 'destroy'], name: 'Operation')
+        choice(choices: ['apply', 'destroy'], name: 'Operation', description: 'Apply or destroy resources.')
     }
     
     stages {
@@ -35,9 +35,7 @@ pipeline {
                           sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan"
                         } else if (params.Operation == 'destroy') {
                           sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_${params.Operation}_plan -destroy"
-                        } else {
-                            error "Please select apply or destroy."
-                        }
+                        } 
                       
                       // Apply plan file
                       sh "terraform apply '${params.Environment}_${params.Operation}_plan'"
@@ -70,7 +68,7 @@ pipeline {
                 subject: "Front-end terraform pipeline successed.",
                 body: "Front-end resources for ${params.Environment} environment have been successfully ${params.Operation}ed. Please check the plan file.",
                 attachLog: false,
-                attachmentsPattern: 'app/techscrum_fe/${params.Environment}_${params.Operation}_plan'
+                attachmentsPattern: '**/${params.Environment}_${params.Operation}_plan'
             )
         }
 
