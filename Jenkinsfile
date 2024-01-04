@@ -31,7 +31,7 @@ pipeline {
                     // sh "terraform apply '${params.Environment}_plan'"
 
                     // plan for destroy & apply destory
-                    sh "terraform plan -var-file="${params.Environment}.tfvars" -out=${params.Environment}_destroy -destroy"
+                    sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_destroy -destroy"
                     sh "terraform apply '${params.Environment}_destroy'"
                       
                     } else {
