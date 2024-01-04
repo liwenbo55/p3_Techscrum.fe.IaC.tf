@@ -71,19 +71,30 @@ pipeline {
         success {
             emailext(
                 to: "lawrence.wenboli@gmail.com",
-                subject: "Front-end terraform pipeline for ${params.Environment} ${params.plan_apply} successed.",
-                body: "Front-end resources for ${params.Environment} environment have been successfully ${params.Operation}ed. Please check the plan file.",
+                subject: "Front-end terraform pipeline for ${params.Environment} environment successed.",
+                body: 
+                    """
+                    Pipeline successed.
+                    Environment: ${params.Environment}. 
+                    Operation: ${params.Operation}. 
+                    Please check the plan file.
+                    """,
                 attachLog: false,
                 attachmentsPattern: "**/${params.Environment}_${params.Operation}_plan.txt"
-                // attachmentsPattern: "**/dev_destroy_plan.txt"
             )
         }
 
         failure {
             emailext(
                 to: "lawrence.wenboli@gmail.com",
-                subject: "Front-end terraform pipeline for ${params.Environment} ${params.plan_apply} failed.",
-                body: "Front-end resources for ${params.Environment} environment have failed to be ${params.Operation}ed. Please check logfile for more details.",
+                subject: "Front-end terraform pipeline for ${params.Environment} environment failed.",
+                body: 
+                    """
+                    Pipeline failed.
+                    Environment: ${params.Environment}. 
+                    Operation: ${params.Operation}. 
+                    Please check logfile for more details.
+                    """,
                 attachLog: true
             )
         }
