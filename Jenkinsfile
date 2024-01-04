@@ -20,7 +20,7 @@ pipeline {
               [$class: 'AmazonWebServicesCredentialsBinding', 
                credentialsId: 'lawrence-jenkins-credential']
             ]){
-              dir('app/techscrum_be'){
+              dir('app/techscrum_fe'){
                   if (params.Environment in ['dev', 'uat', 'prod']) {
                     echo "Deploying front-end resources for ${params.Environment} environment."
                     sh 'terraform --version'
