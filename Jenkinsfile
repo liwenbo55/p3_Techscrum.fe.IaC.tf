@@ -26,7 +26,7 @@ pipeline {
                     sh 'terraform --version'
                     sh "terraform init -reconfigure -backend-config=backend_${params.Environment}.conf -input=false"
 
-                    plan deployment & apply plan
+                    // plan deployment & apply plan
                     sh "terraform plan -var-file=${params.Environment}.tfvars -out=${params.Environment}_plan -input=false"
                     sh "terraform apply '${params.Environment}_plan'"
 
