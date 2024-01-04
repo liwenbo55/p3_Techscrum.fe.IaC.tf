@@ -55,7 +55,7 @@ pipeline {
                       
                       sh 'ls -la'
                       
-                      // Generate a readable pla file
+                      // Generate a readable plan file
                       sh "terraform show -no-color ${params.Environment}_${params.Operation}_plan > ${params.Environment}_${params.Operation}_plan.txt "                      
                           
                     } else {
