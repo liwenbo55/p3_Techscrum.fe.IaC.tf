@@ -53,7 +53,7 @@ pipeline {
                       sh 'ls -la'
                       
                       // 
-                      sh "terraform show -no-color DEV_PLAN > '${params.Environment}_${params.Operation}_plan.txt' "                      
+                      sh "terraform show -no-color '${params.Environment}_${params.Operation}_plan' > '${params.Environment}_${params.Operation}_plan.txt' "                      
                           
                     } else {
                         error "Invalid environment: ${params.Environment}."
