@@ -72,10 +72,10 @@ pipeline {
         success {
             emailext(
                 to: "lawrence.wenboli@gmail.com",
-                subject: "Front-end terraform pipeline for ${params.Environment} environment successed.",
+                subject: "Front-end terraform pipeline for ${params.Environment} environment succeeded.",
                 body: 
                     """
-                    Pipeline successed. \nEnvironment: ${params.Environment}. \nOperation: ${params.Operation}. \nPlease check the plan file.
+                    Pipeline succeeded. \nEnvironment: ${params.Environment}. \nOperation: ${params.Operation}. \nPlease check the plan file.
                     """,
                 attachLog: false,
                 attachmentsPattern: "**/${params.Environment}_${params.Operation}_plan.txt"
@@ -88,10 +88,7 @@ pipeline {
                 subject: "Front-end terraform pipeline for ${params.Environment} environment failed.",
                 body: 
                     """
-                    Pipeline failed.
-                    Environment: ${params.Environment}. 
-                    Operation: ${params.Operation}. 
-                    Please check logfile for more details.
+                    Pipeline failed.\nEnvironment: ${params.Environment}. \nOperation: ${params.Operation}. \nPlease check logfile for more details.
                     """,
                 attachLog: true
             )
