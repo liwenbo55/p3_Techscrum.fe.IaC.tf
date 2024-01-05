@@ -28,6 +28,7 @@ pipeline {
                credentialsId: 'lawrence-jenkins-credential']
             ]){
               dir('app/techscrum_fe'){
+                  sh "aws s3 ls"
                   
                   if (params.Environment in ['dev', 'uat', 'prod']) {
                       echo "Deploying front-end resources for ${params.Environment} environment."
